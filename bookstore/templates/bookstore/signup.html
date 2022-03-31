@@ -1,0 +1,66 @@
+{% extends "bookstore/home.html"%}
+
+{% block maintitle %}
+  SignUp
+{% endblock maintitle %}
+
+{% block main %}
+<div class="container-fluid w-100 d-flex justify-content-center align-items-center" style="min-height: 92vh;background-color: whitesmoke;">
+<form action="{% url 'bookstore:signup' %}" method="POST" class="d-flex p-4 m-4 shadow rounded flex-column w-50 bg-white" style="width: fit-content !important;">
+    {% csrf_token %}
+    <div class="form-img-container text-center" style="width: 20%;height: 20%; align-self: center;background-color: whitesmoke;border-radius: 50%;">
+        {% load static %}
+        <img src="{% static '/bookstore/images/ccloud.png' %}" alt="" width="90%" class="img img-fluid rounded">
+    </div>
+    <div class="d-flex justify-content-center align-items-center my-5">
+        <div class="border border-1 border-primary flex-grow-1"></div>
+        <span class="px-2">Sign Up for Account</span>
+        <div class="border border-1 border-primary flex-grow-1"></div>
+      </div>
+    <div class="fieldcontainer d-flex flex-column flex-md-row">
+        <div class="flex-grow-1 mx-2">
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control p-2 my-2" placeholder="First Name" name="first_name" id="first_name">
+        </div>
+        <div class="flex-grow-1 mx-2">
+            <label for="last_name">Last Name</label>
+            <input type="text" class="form-control p-2 my-2" placeholder="First Name" name="last_name" id="last_name">
+        </div>
+    </div>
+    <div class="fieldcontainer d-flex align-items-center flex-row">
+        <label for="{{form.salutation.id_for_label}}" class="form-label me-2 flex-fill">Salutation</label>
+        {{form.salutation}}
+    </div>
+    <div class="fieldcontainer d-flex align-items-center flex-row ">
+        <label for="{{form.gender.id_for_label}}" class="form-label me-2 flex-fill">Gender</label>
+        {{form.gender}}
+    </div>
+    <div class="fieldcontainer d-flex flex-column flex-md-row">
+        <div class="flex-grow-1 mx-2">
+            <label for="email">Email</label>
+            <input type="text" class="form-control p-2 my-2" placeholder="your email i.e example@gmail.com" name="email" id="email">
+        </div>
+        <div class="flex-grow-1 mx-2">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control p-2 my-2" placeholder="Your Phone number" name="phone" id="phone">
+        </div>
+    </div>
+    <div class="fieldcontainer d-flex flex-column flex-md-row">
+        <div class="flex-grow-1 mx-2">
+            <label for="country">Country</label>
+            <input type="text" class="form-control p-2 my-2" placeholder="Select Country" name="country" id="country">
+        </div>
+        <div class="flex-grow-1 mx-2">
+            <label for="city">City</label>
+            <input type="text" class="form-control p-2 my-2" placeholder="Select City" name="city" id="city">
+        </div>
+    </div>
+    <div class="fieldcontainer d-flex justify-content-end align-content-center my-3">
+        <button class="btn btn-md p-2 px-3 btn-success" type="submit">Submit</button>
+    </div>
+</form>
+</div>
+{% endblock main %}
+
+{% block main-footer %}
+{% endblock main-footer %}

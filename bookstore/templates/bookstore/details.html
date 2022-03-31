@@ -1,0 +1,258 @@
+{% extends "bookstore/home.html" %}
+
+{% block maintitle %}
+    Book Details and Related Books
+{% endblock maintitle %}
+
+{% block main-slider %}
+
+   <div class="book-details-container d-grid p-2 position-relative">
+    <div class="position-absolute top-0 end-0 alert alert-success fade show d-none" data-bs-dismissible="true" role="alert"  style="z-index: 1000;">
+        <button class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="alert"></button>
+        <iframe src="/mymedia/books_images/eng5_CRp6xGa.jpg" allow="layout-animations 'none'; unoptimized-images 'none'; oversized-images 'none'; sync-script 'none'; sync-xhr 'none'; unsized-media 'none';" x-Frame-Options="allow" frameborder="0" title="Book Preview Page" class="" width="300" height="300"  id="bookpreview-frame">
+       
+        </iframe>
+    </div>
+   
+       <div class="card book-details-left p-2">
+           {% if book_pdf %}
+           <a href="{{selected_book.pdf_file.url}}" id="selected_book_pdf_file"></a>
+           {% else %}
+           <a href="{{selected_book.image.url}}" id="selected_book_pdf_file"></a>
+           {% endif %}
+           <img src="{{selected_book.image.url}}" id="selected_bookimg" alt=""  class="card-img-top img img-fluid" style="width: 50%; height: 60%;">
+           <div class="card-body p-2">
+               <h5 class="card-text" id="selected_booktitle">{{selected_book.title}}</h5>
+               <h5 class="card-text" id="slected_bookpriceout">Price: <span id="selected_bookprice">{{selected_book.price}}</span></h5>
+               <h5 class="card-text">Published: {{selected_book.publication_date}}</h5>
+               <h5 class="card-subtitle">Publisher: {{selected_book.publisher}}</h5>
+               <div class="d-flex justify-content-between">
+                   <h5 class="card-text">Reviews: {{selected_book.reviews}}</h5>
+                   <div class="d-flex align-items-center">
+                      
+                       <a href="#" class="btn btn-sm btn-info" id="preview-book">Preview</a>
+                   </div>
+                   
+               </div>
+           </div>
+           <div class="card-footer bg-white border border-white">
+              <span class="text-small px-1">Comments <i class="fas fa-comment"></i> {{selected_book.comments}}</span>
+              <span class="text-small px-1"><i class="fas fa-heart"></i> {{selected_book.likes}}</span>
+              <span class="text-small px-1"><i class="fas fa-thumbs-down"></i> {{selected_book.dislikes}}</span>
+              <span class="text-small px-1">Commend <i class="fas fa-comment-alt"></i></span>
+           </div>
+       </div>
+       <div class="card book-details-right p-1">
+           <h5 class="card-title">Book Description</h5>
+           <div class="card-body">
+               <p class="text-muted">
+                {{selected_book.description}}
+               </p>
+           </div>
+           <div class="card-footer justify-content-center" style="transform: translateY(4px);border: none !important;background: none !important;">
+            {% if selected_book.price > 0.00 %}
+            <a href="#" class="btn btn-success " id="bookaddtocart-a"><i class="fas fa-cart-plus"></i> Add To Cart</a>
+            <a href="#" class="btn btn-success bookdownload-btn mx-2" ><i class="fas fa-download"></i> Download Free Version</a>
+            {% else %}
+            <button class="btn btn-success btn-sm me-2 bookdownload-btn" data-href="{{selected_book.image.url}}"><i class="fas fa-download" ></i>DownLoad</button>
+            {% endif %}
+              
+           </div>
+       </div>
+   </div>
+{% endblock main-slider %}
+
+{% block main-content-right %}
+<div class="main-content-right">
+    <div class="category container-fluid">
+
+        <h2 class="h5 ms-4 col-12">Related Books</h2>
+        <div class="related-books-container d-grid">
+              {% for book in object_list %}
+            <div class="position-relative bg-light related-book">
+                <div class="book-img-container">
+
+                    <img id="selectedbook_img" src="{{book.image.url}}" alt="" class="img"><span>
+                </div>
+                <div class="book-details p-2 bg-white">
+                    <h5 class="book-title fs-6 mt-auto" style="color: #252627;">{{book.title}}</h5>
+                    <h5 class="fs-6">Price: <span>{{book.price}}</span></h5>
+                    <div><a href="{% url 'bookstore:bookdetails' book.id%}" class="text-start text-decoration-none text-dark">View Details</a></div>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% for category in categories %}
+      {% if category.book_set.count > 0 %}
+    <div class="category">
+
+       <h2 class="h6 ms-4">{{category.name}}</h2>
+       <div class="books-container">
+             {% for book in category.book_set.all %}
+           <div class="book  bg-light rounded">
+               <div class="book-img-container">
+                   <img src="{{book.image.url}}" alt="" class="img"><span>
+               </div>
+               <div class="book-details p-2 bg-white">
+                   <h5 class="book-title fs-6 mt-auto" style="color: #252627;">{{book.title}}</h5>
+                   <h5 class="fs-6">Price: <span>{{book.price}}</span></h5>
+                   <div><a href="{% url 'bookstore:bookdetails' book.id%}" class="text-start text-decoration-none">View Details</a></div>
+                   
+               </div>
+           </div>
+           {% endfor %}
+       </div>
+   </div>
+     {% endif %}
+   {% endfor %}
+</div>
+
+{% endblock main-content-right %}
+{% block js-other%}
+<script>
+  
+$(document).ready(function () {
+    console.log("ready");
+    var downloadBtns=document.querySelectorAll(".bookdownload-btn");
+    console.log(downloadBtns);
+    downloadBtns.forEach(btn=>{
+        btn.addEventListener("click",function(){
+            var pdfUrl=document.getElementById("selected_book_pdf_file");
+            console.log(pdfUrl);
+            var a=document.createElement("a")
+            a.href=pdfUrl.href
+            
+            a.setAttribute("download",pdfUrl.href)
+           
+            a.click()
+
+            
+        })
+    })
+   var preveiewBtn=document.getElementById("preview-book");
+   preveiewBtn.addEventListener("click",function(){
+
+       var selectedUrl=document.getElementById("selected_book_pdf_file");
+       var url=selectedUrl.src;
+       var iframe=document.getElementById("bookpreview-frame")
+       console.log(iframe);
+       iframe.setAttribute("src",url)
+       
+   })
+    function getFile(){
+        var filename="";
+        var input=document.createElement("input");
+        input.type="file";
+        input.onchange=function(){
+            
+           filename=this.files[0].name
+        }
+        input.click();
+        return filename;
+    }
+    var addTocartBtn=document.getElementById("bookaddtocart-a");
+    var cartContainer=document.querySelector("#cart .cart-container");
+    var cartCountInputs=[];
+   
+    
+    addTocartBtn.addEventListener("click",function(){
+            var newItem=document.createElement("div");
+            var img=document.getElementById("selected_bookimg");
+            var price=document.getElementById("selected_bookprice");
+            var title=document.getElementById("selected_booktitle");
+            newItem.classList.add("cartItem","card","p-2","my-2","border","border-light");
+            newItem.innerHTML=`
+            <div class="card-left">
+                     <div class="card-img-top">
+                         <img src="${img.src}" alt="" class="img">
+                     </div>
+                     <div class="d-flex flex-column">
+                          <span>${title.innerText}</span>
+                          <span>Price: $<span class="price">${price.innerText}</span></span>
+                     </div>
+                 </div>
+                 <div class="card-right p-2">
+                      <div class="d-flex flex-column">
+                          <label class="form-label text-nowrap" for="">Number of Items</label>
+                          <input class="form-control numberof_items"  type="number" value="1">
+                      </div>
+                      <div>
+                        <label class="form-label" for="">Total</label>
+                        <input class="form-control itemtotalprice" type="text" disabled value="${price.innerText}">
+                      </div>
+                 </div>
+            `;
+            $(newItem).css("height","280px").appendTo(cartContainer)
+            
+
+        updateCartTotals()
+        updateCartNumber()
+       // updateCart()
+        var cartNumbers=document.querySelectorAll(".numberof_items");
+          cartNumbers.forEach(item=>{
+        item.addEventListener("change",function(){
+        var cartTotalItem=$(event.target).parent().parent().find(".itemtotalprice")
+        var ItemPrice=$(event.target).parent().parent().parent().find(".price").text();
+        var count=event.target.value;
+       
+        
+        var newTotal=0.0;
+        newTotal=Number.parseFloat(ItemPrice) * Number.parseInt(count);
+        cartTotalItem.prop("value",newTotal)
+       updateCartTotals();
+       updateCartNumber();
+    })
+});
+           
+    });
+    function updateCartTotals(){
+                var cartPrices=document.querySelectorAll(".cartItem .itemtotalprice");
+                var totalsItem=document.getElementById("cartTotals");
+                var totals=Number(0.0)
+               
+                cartPrices.forEach(item=>{
+                   totals += Number.parseFloat(item.value)
+                })
+                totalsItem.value=totals;
+            }
+});
+
+
+function updateCartNumber(){
+    var cartItems=document.getElementById("cart_count");
+    var cartNumbers=document.querySelectorAll(".cartItem .numberof_items");
+    var count=0;
+    cartNumbers.forEach(item=>{
+        count+=Number.parseInt(item.value)
+    })
+    cartItems.innerText=count;
+
+}
+
+function updateCart(){
+    var cartContainerChildren=document.querySelector("#cart .cart-container");
+    var cartItems=[];
+    if(cartContainerChildren.hasChildNodes){
+       var elementChildren=Array.from(cartContainerChildren.children)
+     
+       elementChildren.forEach(elem=>{
+           cartItems.push(elem)
+       })
+       localStorage.setItem("cart_contents",cartItems);
+    }
+    Array.from(cartContainerChildren.children).map(elem=>{
+        elem.remove()
+    })
+    console.log(cartContainerChildren.children);
+    var newItems=localStorage.getItem("cart_contents");
+    Array.from(newItems).forEach(elem=>{
+        cartContainerChildren.appendChild(elem)
+    })
+   
+}
+</script>
+
+{% endblock js-other%}
+

@@ -1,0 +1,32 @@
+{% extends "bookstore/home.html" %}
+
+{% block maintitle %}
+  {{category}}
+{% endblock maintitle %}
+
+{% block main-content-right %}
+   <div class="container-fluid p-2">
+       <h4 class="lead p-2 my-2">{{category}}</h4>
+       {% if books.count > 0%}
+       <div class="container-fluid p-2" style="display: grid;grid-template-columns: repeat(5,1fr);gap:10px;grid-auto-rows: 300px;">
+        {% for book in books %}
+        <div class="book bg-light rounded" data-id="{{book.pk}}" data-free="false">
+            <div class="book-img-container">
+                <img src="{{book.image.url}}" alt="" class="img"><span>
+            </div>
+            <div class="book-details bg-white p-2 d-flex flex-column">
+                <h5 class="book-title fs-6 flex-grow-1 mt-auto text-nowrap" style="color: #252627;overflow: hidden;">{{book.title}}</h5>
+                <h5 class="fs-6">Price: <span>{{book.price}}</span></h5>
+                <div><a href="{% url 'bookstore:bookdetails' book.id%}" class="">View Details</a></div>
+             
+            </div>
+        </div>
+        {% endfor %}
+       </div>
+       {% else %}
+       <div class="container-fluid p-2">
+           <span class="lead">No books associated with this category.</span>
+       </div>
+       {% endif %}
+   </div>
+{% endblock main-content-right %}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="bootstrap-5/css/bootstrap.css">
+    <link rel="stylesheet" href="/bookstore/static/bookstore/fontawesome/css/all.css">
+    <script src="popper.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <style>
+
+
+    </style>
+</head>
+<body>
+    <nav class="main-nav navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+              <a href="#" class="navbar-brand"><img src="/bookstore/static/bookstore/images/ccloud.png" alt="" width="30" height="30">BookStore</a>
+              <form action="" class="d-flex flex-grow-1 me-3">
+                <input type="text" class="form-control flex-grow-1">
+                <button class="btn btn-small btn-light border border-1 rounded-end">Search</button>
+              </form>
+              <button role="button" class="navbar-toggler mx-2" data-bs-toggle="collapse" data-bs-target="#mainvav-collapse">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="mainvav-collapse">
+                     <div class="navbar-nav" style="width:100%">
+                         <ul class="navbar-nav " style="width: 100%;">
+                             <li class="nav-item  "><a href="#" class="nav-link">Home</a></li>
+                             <li class="nav-item  dropdown"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#navdropdown">Publishers</a>
+                                <ul class="dropdown-menu" id="navdropdown">
+                                    <li class="dropdown-item">Item1</li>
+                                    <li class="dropdown-item">Item 2</li>
+                                    <li class="dropdown-item">Item3 </li>
+                                </ul>
+                            </li>
+                             <li class="nav-item "><a href="" class="nav-link">Authors</a></li>
+                             <li class="nav-item cart"><a href="" class="nav-link"><i class="fas fa-cart-plus"></i> Cart</a></li>
+                             <li class="nav-item signup mx-2"><a href="" class="nav-link rounded"><i class="fas fa-user"></i> Sign Up</a></li>
+                             <li class="nav-item  login"><a href="" class="nav-link rounded"><i class="fas fa-lock-open"></i> Login</a></li>
+                         </ul>
+                     </div>
+              </div>
+        </div>
+    </nav>
+    <!--end of main navigation-->
+    <div class="carousel slide main-slider" data-bs-ride="carousel" id="main-slider">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#main-slider" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#main-slider" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#main-slider" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/media/mainsliderimgs/bg1.jpg" alt="" class=" d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="/media/mainsliderimgs/bg2.jpg" alt="" class="w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="/media/mainsliderimgs/bg3.jpg" alt="" class="w-100">
+            </div>
+        </div>
+        <button role="button" class="carousel-control-prev" data-bs-target="#main-slider" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-success rounded-pill p-2"></span>
+        </button>
+        <button role="button" class="carousel-control-next" data-bs-target="#main-slider" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-success rounded-pill p-2"></span>
+        </button>
+    </div>
+    <!--end of main slider-->
+    <div class="main-content">
+        <div class="main-content-left">
+            <div class="navbar navbar-expand-sm navbar-light bg-light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                   <div class="collapse navbar-collapse flex-column" id="main-content-left-collapse">
+                          <h5>Categories</h5>
+                          <ul class="navbar-nav flex-column" style="width: 100%;">
+                    
+                              <li class="nav-item">
+                                  <div class="d-flex align-items-center">
+                                      <a class="fas fa-chevron-right nav-link" data-bs-toggle="collapse" role="button" href="#mycollapse" arial-expanded="false"></i>
+                                      <a href="#" class="nav-link">Literature</a>
+                                  </div>
+                                  <div class="collapse ms-2" id="mycollapse">
+                                      <ul class="navbar-nav flex-column category-dropdown">
+                                          <li>Iten1</li>
+                                          <li>2</li>
+                                          <li>3</li>
+                                      </ul>
+                                  </div>
+                              </li>
+                              <li class="nav-item"><a href="" class="nav-link">Poetry</a></li>
+                              <li class="nav-item"><a href="" class="nav-link">Mathematics</a></li>
+                              <li class="nav-item"><a href="" class="nav-link">Religion</a></li>
+                              <li class="nav-item"><a href="" class="nav-link">Politics</a></li>
+                              <li class="nav-item"><a href="" class="nav-link"></a></li>
+                              <li class="nav-item"><a href="" class="nav-link"></a></li>
+                              <li class="nav-item"><a href="" class="nav-link"></a></li>
+                              <li class="nav-item"><a href="" class="nav-link"></a></li>
+                              <li class="nav-item"><a href="" class="nav-link"></a></li>
+                          </ul>
+                   </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="main-content-right">
+            <div class="category">
+               <h2>Literature</h2>
+               <div class="books-container">
+
+                   <div class="book">
+                       <div class="book-img-container">
+                           <img src="/bookstore/static/bookstore/images/eng1.jpg" alt=""><span>
+                       </div>
+                       <div class="book-details pb-2">
+                           <h5 class="book-title fs-6" >Grade1</h5>
+                           <h5 class="fs-6">Price: <span>100</span></h5>
+                           <div><a href="#" class="btn btn-light border border-primary">View Details</a></div>
+                       </div>
+                   </div>
+               </div>
+        </div>
+    </div>
+</body>
+</html>

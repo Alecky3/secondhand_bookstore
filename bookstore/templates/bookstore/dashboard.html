@@ -1,0 +1,623 @@
+{% extends "bookstore/home.html" %}
+
+{% block maintitle %}
+  dashoard
+{% endblock maintitle%}
+
+{% block main-nav%}
+<nav class="navbar navbar-expand-md navbar-light fixed-top border border-bottom-1" style="background-color: #0c0c27 !important;">
+    <div class="container-fluid">
+       <i class="fas fa-bars text-light"></i>
+       <a class="nav-link mx-2 text-light" href="{% url 'bookstore:home' %}">Home</a>
+       <span class="navbar-brand align-self-center flex-grow-1 text-center text-light">DashBoard</span>
+        <div class="rounded bg-dark"><a href="{% url 'bookstore:home' %}" class="nav-link text-light">Logout</a></div>
+       <div class="d-flex align-items-center">
+           <span class="p-2 text-light">Terry</span>
+       <div style="width: 40px; height: 40px;" class="rounded-pill bg-info d-flex justify-content-center align-items-center"><Span>T</Span></div>
+       </div>
+   
+    </div>
+   </nav>
+{% endblock main-nav%}
+
+{% block main-slider%}
+{% endblock main-slider%}
+
+{%block main-content%}
+<div class="main-content-dashboard d-grid" style="margin-top: 58px !important;">
+    <div class="main-content-dashboard-left bg-light" style="background-color: #e0e0e0 !important;">
+        <ul class="nav nav-pills  flex-column justify-content-center align-items-center py-2" role="tablist">
+            <li class="nav-item d-flex flex-column justify-content-center align-items-center  active" arial-current="page">
+                <i class="fas fa-user" ></i>
+                <button role="tab" class="nav-link active mt-1" data-bs-toggle="tab" data-bs-target="#profile" type="button" style="font-size: large;">Profile</button>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-center align-items-center">
+                <i class="fas fa-download"></i>
+                <button role="tab" type="button" data-bs-toggle="tab" data-bs-target="#uploads" class="nav-link mt-1">Uploads</button>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-center align-items-center">
+                <i class="fas fa-file"></i>
+                <button role="tab" type="button" data-bs-toggle="tab" data-bs-target="#transactions" class="nav-link mt-1">Transactions</a>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-center align-items-center">
+                <i class="fas fa-comment-alt"></i>
+                <button role="tab" type="button" data-bs-toggle="tab" data-bs-target="#messages" class="nav-link mt-1">Messages</button>
+            </li>
+            <li class="nav-item d-flex flex-column justify-content-center align-items-center">
+                <i class="fas fa-history"></i>
+                <button role="tab" type="button" data-bs-toggle="tab" data-bs-target="#history" class="nav-link mt-1 ">History</button>
+            </li>
+        </ul>
+    </div>
+    <div class="main-content-dashboard-right" style="background-color: whitesmoke;">
+        <div class="tab-content w-100">
+            <!--start of profile-->
+            <div class="tab-pane fade show active w-100 px-2" id="profile" role="tabpanel" >
+               <form enctype="multipart/form-data" action="{% url 'bookstore:dashboard' user.pk %}"   class=" d-flex flex-column p-2 m-2 bg-white" method="POST">
+                   {% csrf_token %}
+                   <div class="d-flex flex-column-reverse flex-md-row shadow-sm p-2 my-2">
+                     <div class="d-flex flex-column flex-sm-row">
+                     <div class="control-container d-flex align-items-center">
+                        <label class="form-label text-nowrap p-2 m-2">First Name</label>
+                        <input type="text" class="form-control p-2 m-2" value="{{user.first_name}}">
+                      </div>
+                      <div class="control-container d-flex align-items-center">
+                         <label class="form-label text-nowrap p-2 m-2">Last Name</label>
+                         <input type="text" class="form-control p-2 m-2" value="{{user.last_name}}">
+                      </div>
+                     </div>
+                      <div class="d-flex flex-column justify-content-center ms-auto me-2 align-items-center">
+                          <div class="profile-img-container rounded-pill bg-light " style="width: 200px; height: 200px;">
+                              {% if profile_image %}
+                              <img src="{{user.profile_image.url}}" alt="" class="img rounded-pill" id="profile-image" style="width: 100%; height: 100%;">
+                              {% else %}
+                               {% load static %}
+                              <img src="{% static '/bookstore/images/user.svg' %}" alt="" id="profile-image" class="img rounded-pill" style="width: 100%; height: 100%;">
+                              {% endif %}
+                          </div>
+                          <div class="d-flex mt-2">
+                            <!-- <label for="" class="form-label">Choose Image</label> -->
+                            <input type="file" class="form-control"   accept="image/*" id="profile-image-change" files="{{user.profile_image.name}}">
+                          </div>
+                          
+                      </div>
+                   </div>
+                  <div class="d-flex flex-column fled-md-column w-100 shadow-sm p-2 my-2">
+                   <div class="d-flex flex-fill flex-fill my-3 p-2 border border-1 border-light rounded shadow-sm p-2 my-2">
+                       <fieldset class="">
+                           <legend class="">Salutation</legend>
+                            <div class="control-container d-flex align-items-center">
+                                <label class="form-label text-nowrap p-2 m-2">Mr</label>
+                                <input type="radio" class="form-radio p-2 m-2">
+                             </div>
+                             <div class="control-container d-flex align-items-center">
+                                <label class="form-label text-nowrap p-2 m-2">Mrs</label>
+                                <input type="radio" class="form-radio p-2 m-2">
+                             </div>
+                             <div class="control-container d-flex align-items-center">
+                                <label class="form-label text-nowrap p-2 m-2">Mis</label>
+                                <input type="radio" class="form-radiop-2 m-2">
+                             </div>
+                           
+                       </fieldset>
+                   </div>
+                   <div class="d-flex flex-fill my-3 ms-2 p-2  border border-1 border-light rounded shadow-sm p-2 my-2">
+                       <fieldset>
+                           <legend>Gender</legend>
+                           <div class="control-container d-flex align-items-center">
+                            <label class="form-label text-nowrap p-2 m-2">Male</label>
+                            <input type="radio" class="form-radiop-2 m-2">
+                         </div>
+                         <div class="control-container d-flex align-items-center">
+                            <label class="form-label text-nowrap p-2 m-2">Female</label>
+                            <input type="radio" class="form-radiop-2 m-2">
+                         </div>
+                         <div class="control-container d-flex align-items-center">
+                            <label class="form-label text-nowrap p-2 m-2">Other</label>
+                            <input type="radio" class="form-radiop-2 m-2">
+                         </div>
+                       </fieldset>
+                   </div>
+                  </div>
+                  <div class="d-flex flex-column  flex-lg-row border border-top border-light shadow-sm p-2 my-2">
+                    <div class="control-container d-flex align-items-center">
+                       <label class="form-label text-nowrap p-2 m-2">Phone</label>
+                       <input type="text" class="form-control p-2 m-2" placeholder="Phone No" value="{{user.phone}}">
+                     </div>
+                     <div class="control-container d-flex align-items-center">
+                        <label class="form-label text-nowrap p-2 m-2">Email</label>
+                        <input type="text" class="form-control p-2 m-2" placeholder="your new Email" value="{{user.email}}" style="min-width:200px;">
+                     </div>
+                  </div>
+                  <div class="d-flex border border-top border-light flex-column flex-md-row shadow-sm">
+                    <div class="control-container d-flex align-items-center">
+                       <label class="form-label text-nowrap p-2 m-2">Country</label>
+                       <select name="" id="" class="form-select" style="width: 200px;"></select>
+                     </div>
+                     <div class="control-container d-flex align-items-center">
+                        <label class="form-label text-nowrap p-2 m-2">City</label>
+                        <select name="" id="" class="form-select" style="width: 200px;" ></select>
+                     </div>
+                  </div>
+                  <span class="text-muted lead">About yourself</span>
+                  <textarea name="" id="" cols="30" rows="10" class="form-control">
+
+                  </textarea>
+                  <div class="d-flex w-100 justify-content-end align-items-center p-2 m-2 shadow-sm p-2 my-2">
+                      <input type="submit" value="Submit" class="btn btn-success btn-lg p-2">
+                  </div>
+               </form>
+            </div>
+            <!--end of profile-->
+            <div class="tab-pane fade w-100" id="uploads" role="tabpanel">
+                
+               <div class="tab-content">
+                   
+                   <div class="tab-pane fade show active position-relative" role="tabpanel" id="startpage">
+                       
+                       
+                    <ul class="nav nav-pills  align-items-center  p-2" role="tablist">
+                        <li class="nav-item"><span class="lead">Select Book To Change</span></li>
+                        <li class="nav-item ms-auto" role="presentation">
+                            <button role="tab" class=" btn btn-dark" data-bs-toggle="tab" data-bs-target="#addbookpanel" type="button" style="font-size: large;">Add Book</button>
+                        </li>
+                    </ul>
+                      
+                       <div class="controls-container d-flex p-2  align-items-center" style="background: #e0e0e0;">
+                           <lable class="form-label mx-2">Books</lable>
+                           
+                       </div>
+                       <div class="user-books-container px-2 py-3">
+                           <table id="user_books" class="display" style="width: 100%;">
+                               <thead>
+                                   <tr>
+                                       <td>Your Books</td>
+                                       <td></td>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                 
+                                     {% for book in user.book_set.all %}
+                                        <tr>
+                                            <td data-id="{{book.pk}}">{{book.title}}</td>
+                                            <td class="d-flex justify-content-end" >
+                                                <button class="btn btn-sm btn-danger book-delete mx-2" data-id="{{book.pk}}" data-user="{{user.pk}}">Delete</button>
+                                                <button class="btn btn-sm btn-success btn book-update" data-id="{{book.pk}}" data-user="{{user.pk}}">Update</button>
+                                            </td>
+                                           
+                                        </tr>
+                                     {% endfor %}
+                                     
+                                 
+                               </tbody> 
+                           </table>
+                       </div>
+                   </div>
+                   <div class="tab-pane fade" id="addbookpanel" role="tabpanel">
+                    <ul class="nav nav-pills  align-items-center  p-2" role="tablist">
+                        <li class="nav-item ms-auto" role="presentation">
+                            <a role="tab" class="nav-link text-dark" data-bs-toggle="tab" data-bs-target="#startpage" type="button" style="font-size: large;"><i class="fas fa-arrow-left"></i> Back</a>
+                        </li>
+                    </ul>
+                       <div class="d-flex p-2">
+                           <span class="lead ">Add Book</span>
+                           <div class="d-flex flex-column justify-content-center ms-auto me-2 align-items-center">
+                            <div class="profile-img-container rounded bg-light " style="width: 200px; height: 200px;">
+                               
+                                <img src="" alt="No Image Selected" id="currentSelectedImage" class="img rounded" style="width: 100%; height: 100%;">
+                               
+                            </div>
+                           <span class="lead">Current Book Image</span>
+                            
+                            
+                        </div>
+                       </div>
+                       <form enctype="multipart/form-data" action="{% url 'bookstore:addbook' user_id%}" id="addBookForm" class="d-flex flex-column p-2 m-2" method="POST">
+                           {% csrf_token %}
+                           {% for field in addBookForm %}
+                             <div class="controls-container d-flex flex-column flex-sm-row my-2 align-items-center">
+                                 {{field.label_tag}}
+                                 {{field}}
+                             </div>
+                           {% endfor %}
+                           <button class="btn btn-lg btn-outline-primary align-self-end">Add</button>
+                       </form>
+                   </div>
+               </div>
+            </div>
+            <div class="tab-pane fade w-100" id="transactions" role="tabpanel">
+                <div class="transactions-container d-flex flex-column p-2">
+                       <div class="bought-books p-2 w-100">
+                           <span class="d-block lead bg-light p-2">Sales</span>
+                           <table class="bg-white p-2 w-100">
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 1</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 2</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Elementary Mathematics</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Calculus 1</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 4</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">English Literature</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Mathematics Grade 4</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Programming for beginners</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Machine Lerning Complete Guide</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 2</td>
+                               </tr>
+                           </table>
+                       </div>
+                       <div class="downloaded w-100 p-2">
+                        <span class="d-block lead bg-light p-2">Downloaded</span>
+                           <table class="bg-white p-2 w-100">
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 1</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 2</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Elementary Mathematics</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Calculus 1</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 4</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">English Literature</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Mathematics Grade 4</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Programming for beginners</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Machine Lerning Complete Guide</td>
+                               </tr>
+                               <tr class="border border-bottom border-1 ">
+                                   <td class="p-2 mx-2">Grade 2</td>
+                               </tr>
+                           </table>
+                       </div>
+                </div>
+            </div>
+            <div class="tab-pane fade w-100" id="messages" role="tabpanel">
+                <div class="messages-container container-fluid d-flex flex-column">
+                     <div><span class="lead p-2 p-2">Youy Messages</span></div>
+                     <div class="messages-container-content d-flex flex-column justify-content-center align-items-center">
+                        {% for message in messages %}
+                        <div class="card bg-white border border-1  rounded shadow-lg mb-4 my-2 p-3" style="width: 80% !important;">
+                            
+                            <div class="card-header rounded p-2 border border-info rounded-pill d-flex">
+                                <span class="card-subtitle">{{message.date}}</span>
+                                <button class="btn btn-danger btn-sm ms-auto me-2 delete-message">Delete</button>
+                            </div>
+                            <div class="card-body p-2">
+                                <span class="card-text">{{message.message}}</span>
+                            </div>
+                           
+                        </div>
+                        {% endfor %}
+                     </div>
+                </div>
+            </div>
+            <div class="tab-pane fade w-100" id="history" role="tabpanel">History</div>
+        </div>
+    </div>
+</div>
+{% endblock main-content%}
+
+{% block main-footer%}
+{% endblock main-footer%}
+
+{%block js-other%}
+  <script>
+       var bookFormLabels=document.querySelectorAll("#addBookForm label");
+       bookFormLabels.forEach(label=>{
+        label.classList.add("form-label","p-2")
+        label.style="min-width: 110px"
+    })
+    var bookFormInputs=document.querySelectorAll("#addBookForm input");
+    bookFormInputs.forEach(input=>{
+        input.classList.add("form-control","p-2")
+    })
+    var bookFormSelects=document.querySelectorAll("#addBookForm select");
+    bookFormSelects.forEach(select=>{
+        select.classList.add("form-select","p-2")
+    })
+    var bookFormTextAreas=document.querySelectorAll("#addBookForm textarea");
+    bookFormTextAreas.forEach(textarea=>{
+        textarea.classList.add("form-control","p-2")
+    })
+    var currentImage=document.getElementById("currentSelectedImage")
+    var currentImageField=document.getElementById("id_image");
+    currentImageField.addEventListener("change",function(){
+        var file=this.files[0];
+        var url=URL.createObjectURL(file);
+        currentImage.src=url;
+    })
+    var publicationDate=document.getElementById("id_publication_date");
+    publicationDate.setAttribute("type","date");
+    var userField=document.getElementById("id_user");
+    userField.setAttribute("readonly",true)
+    $(document).ready(function(){
+          $("#user_books").dataTable()
+    })
+
+    //delete book
+    var deleteBookBtns=document.querySelectorAll(".book-delete");
+    deleteBookBtns.forEach(btn=>{
+        btn.addEventListener("click",deleteBook)
+    })
+    function deleteBook(event){
+        var bookId=event.target.getAttribute("data-id");
+        var bookUser=event.target.getAttribute("data-user");
+         var tr=$(event.target).parent().parent()
+        function getCookie(name) {
+                     let cookieValue = null;
+                     if (document.cookie && document.cookie !== '') {
+                     const cookies = document.cookie.split(';');
+                     for (let i = 0; i < cookies.length; i++) {
+                      const cookie = cookies[i].trim();
+                       // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                 }
+                }
+               }
+                    return cookieValue;
+            }
+            const csrftoken = getCookie('csrftoken');
+            $.ajax({
+                url:"/bookstore/deletebook/",
+                method:"POST",
+                data:{
+                    "book_id":bookId,
+                    "user_id":bookUser
+                },
+                headers:{
+                    "X-CSRFToken":csrftoken
+                }
+            }).done(function(result){
+                console.log(result.data);
+                tr.remove()
+            }).fail(function(err){
+                console.log(err);
+            })
+    }
+    //end delete book
+
+    //update book 
+    var updateBtns=document.querySelectorAll(".book-update")
+    updateBtns.forEach(btn=>{
+        btn.addEventListener("click",updateBook)
+    })
+    function updateBook(event){
+       var userId=event.target.getAttribute("data-user");
+       var bookId=event.target.getAttribute("data-id");
+       var scrollY=window.scrollY
+       function getCookie(name) {
+                     let cookieValue = null;
+                     if (document.cookie && document.cookie !== '') {
+                     const cookies = document.cookie.split(';');
+                     for (let i = 0; i < cookies.length; i++) {
+                      const cookie = cookies[i].trim();
+                       // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                 }
+                }
+               }
+                    return cookieValue;
+            }
+            const csrftoken = getCookie('csrftoken');
+       var updateAlert=document.createElement("div");
+       updateAlert.classList.add("alert","bg-white","border","border-light","rounded","shadow-lg",
+       "w-50","position-absolute","start-25","fade")
+       updateAlert.setAttribute("role","alert")
+       updateAlert.setAttribute("data-bs-dismissible","true")
+       updateAlert.setAttribute("id","updatealert")
+       updateAlert.innerHTML=`
+       <button class="btn-close position-absolute top-0 end-0" role="alert" data-bs-dismiss="alert"></button>
+        <h4 class="lead p-2 py-2 border-bottom border-light border-2">Update Book</h4>
+        <form enctype="multipart/form-data" action="/bookstore/updatebook/${userId}/" method="POST" class="d-flex p-2 flex-column my-2">
+            <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}">
+            <input type="text" class="visually-hidden" name="book_id" id="book_id" value="${bookId}">
+            <div class="input-container d-flex">
+                 <div class="d-flex p-2 my-2 align-items-center">
+                     <lable class="form-label mx-2 text-nowrap">Uplaod Image</lable>
+                     <input type="file" name="book_image" id="update-book-img" class="form-control">
+                 </div>
+                 <div class="update-book-img-container p-2" style="max-width: 50%;max-height: 300px ;">
+                     <img src="Images/eng1.jpg" alt="" style="width: 100%;height: 100%;" id="book-update-img">
+                 </div>
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label text-nowrap mx-2" style="min-width: 115px;"><i class="fas fa-pdf"></i> Book Pdf file</lable>
+                <input type="file" class="form-control " name="book_pdffile" id="book_pdffile">
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap" style="min-width: 115px;">Title</lable>
+                <input type="text" class="form-control p-2 m-2" name="book_title" id="book_title" placeholder="title">
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap" style="min-width: 115px;">Description</lable>
+                <textarea name="" id="" cols="30" rows="5" name="book_description" id="book_description" class="form-control p-2 m-2"></textarea>
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap" style="min-width: 115px;">Publisher</lable>
+                <select class="form-control p-2 m-2" name="publisher_id" id="publisher_id" placeholder="select publisher"></select>
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap" style="min-width: 115px;">Authors</lable>
+                <select class="form-control p-2 m-2" name="authors_id" id="authors_id" multiple></select>
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap" style="min-width: 115px;">Categories</lable>
+                <select class="form-control p-2 m-2" name="category_id" id="category_id" placeholder="select categories" multiple></select>
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap">Subcategories</lable>
+                <select class="form-control p-2 m-2" name="subcategory_id" id="subcategory_id"  placeholder="select categories" multiple></select>
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap" style="min-width: 115px;">Publication Date</lable>
+                <input type="datetime-local" name="publication_date" id="publication_date"  class="form-control p-2 m-2">
+            </div>
+            <div class="input-container d-flex my-2">
+                <lable class="form-label p-2 m-2 text-nowrap" style="min-width: 115px;">Price</lable>
+                <input type="number" name="book_price" id="book_price" class="form-control p-2 m-2">
+            </div>
+            <button class="btn btn-success align-self-end my-2" type="submit">Submit</button>
+        </form>
+       `
+       $(updateAlert).css({
+           "top":scrollY+"px",
+           "z-index":2000,
+           "height":"90vh",
+           "overflow-y":"scroll"
+       })
+       var alerts=document.getElementById("updatealert")
+       var bAlert=new bootstrap.Alert(alerts)
+       bAlert.close()
+       $(document.body).append(updateAlert)
+
+       var categorySelect=document.getElementById("category_id")
+       var subcategorySelect=document.getElementById("subcategory_id")
+       var publisherslect=document.getElementById("publisher_id")
+       var authorSelect=document.getElementById("authors_id")
+       var bookImage=document.getElementById("book-update-img")
+
+       //update select options
+       //
+       $.ajax({
+             url:"/bookstore/bookimage/",
+             data:{
+                 "book_id":bookId
+             }
+         }).done(function(result){
+             console.log(result.data);
+             var ImgSrc=result.data
+             bookImage.src=ImgSrc
+             
+         }).fail(function(err){
+             console.log("failed");
+             console.log(err);
+         })
+         //
+       //
+         $.ajax({
+             url:"/bookstore/categories/"
+         }).done(function(result){
+             console.log(result.data);
+             var categories=result.data
+             categories.forEach(category=>{
+                 var option=document.createElement("option")
+                 option.value=category[1]
+                 option.innerText=category[0]
+                 categorySelect.appendChild(option)
+             })
+         }).fail(function(err){
+             console.log("failed");
+             console.log(err);
+         })
+         //
+         //
+         $.ajax({
+             url:"/bookstore/subcategories/"
+         }).done(function(result){
+             var categories=result.data
+             console.log("subcategories");
+             console.log(result.data);
+             categories.forEach(category=>{
+                 var option=document.createElement("option")
+                 option.value=category[1]
+                 option.innerText=category[0]
+                 subcategorySelect.appendChild(option)
+             })
+         }).fail(function(err){
+             console.log("failed");
+             console.log(err);
+         })
+         //
+         //
+         $.ajax({
+             url:"/bookstore/publishers/"
+         }).done(function(result){
+             var categories=result.data
+             console.log("publishers");
+             console.log(result.data);
+             categories.forEach(category=>{
+                 var option=document.createElement("option")
+                 option.value=category[1]
+                 option.innerText=category[0]
+                 publisherslect.appendChild(option)
+             })
+         }).fail(function(err){
+             console.log("failed");
+             console.log(err);
+         })
+         //
+         //
+         $.ajax({
+             url:"/bookstore/authors/"
+         }).done(function(result){
+             var categories=result.data
+             console.log("authors");
+             console.log(result.data);
+             categories.forEach(category=>{
+                 var option=document.createElement("option")
+                 option.value=category[1]
+                 option.innerText=category[0]
+                 authorSelect.appendChild(option)
+             })
+         }).fail(function(err){
+             console.log("failed authors");
+             console.log(err);
+         })
+         //
+       //end update select options
+    }
+    //end update book
+
+    //profile image change
+    var profileImageInput=document.getElementById("profile-image-change");
+    var profileImage=document.getElementById("profile-image");
+    profileImageInput.addEventListener("change",function(){
+        var file=this.files[0]
+        var url=URL.createObjectURL(file)
+        profileImage.src=url
+    })
+    //end profile image change
+
+    //delete message
+       var deletemessageBtn=document.querySelectorAll(".delete-message")
+       deletemessageBtn.forEach(btn=>{
+           btn.addEventListener("click",deleteMessage)
+       })
+       function deleteMessage(event){
+        $(event.target).parent().parent().remove()
+       }
+    //end delete message
+  </script>
+{% endblock js-other%}
